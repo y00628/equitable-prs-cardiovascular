@@ -1,1 +1,7 @@
-data/1000_genomes_vcf
+*.gz
+*.bed
+*.bim
+*.fam
+*.log
+*.tbi
+data/1000_genomes_index
