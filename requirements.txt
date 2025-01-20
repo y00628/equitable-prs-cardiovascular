@@ -1,0 +1,9 @@
+argparse
+importlib-metadata
+numpy
+pandas
+scipy
+pandas-plink
+scikit-learn
+glimix-core
+numpy-sugar
