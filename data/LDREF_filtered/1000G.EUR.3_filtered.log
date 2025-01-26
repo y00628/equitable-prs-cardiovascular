@@ -1,0 +1,29 @@
+PLINK v1.9.0-b.7.7 64-bit (22 Oct 2024)
+Options in effect:
+  --bfile ../data/LDREF/1000G.EUR.3
+  --keep ../data/samples.txt
+  --make-bed
+  --out ../data/LDREF_filtered/1000G.EUR.3_filtered
+
+Hostname: LABBOB
+Working directory: c:\Users\garve\UCSD\UCSD2024-2025\WI25\DSC 180B\equitable-prs-cardiovascular\src
+Start time: Sat Jan 25 18:23:51 2025
+
+Random number seed: 1737858231
+15720 MB RAM detected; reserving 7860 MB for main workspace.
+83036 variants loaded from .bim file.
+489 people (0 males, 0 females, 489 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to ../data/LDREF_filtered/1000G.EUR.3_filtered.nosex
+.
+--keep: 343 people remaining.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 343 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate in remaining samples is exactly 1.
+83036 variants and 343 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to ../data/LDREF_filtered/1000G.EUR.3_filtered.bed +
+../data/LDREF_filtered/1000G.EUR.3_filtered.bim +
+../data/LDREF_filtered/1000G.EUR.3_filtered.fam ... done.
+
+End time: Sat Jan 25 18:23:51 2025
