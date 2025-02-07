@@ -83,24 +83,32 @@ weights.bslmm = function( input , bv_type , snp , out=NA ) {
 }
 
 # PLINK: LASSO
-weights.lasso = function( input , hsq , snp , out=NA ) {
-	if ( is.na(out) ) out = paste(input,".LASSO",sep='')
+weights.lasso = function( input , hsq , snp , lambda=0.5 , out=NA ) {
+    if ( is.na(out) ) out = paste(input,".LASSO",sep='')
+	
+    # Modify the command to include --lambda
+    arg = paste( opt$PATH_plink , " --allow-no-sex --bfile " , input , 
+                 " --lasso " , hsq , " --adjust ", " --lambda ", lambda, " --out " , out , sep='' )
 
-	arg = paste( opt$PATH_plink , " --allow-no-sex --bfile " , input , " --lasso " , hsq , " --out " , out , sep='' )
-	system( arg , ignore.stdout=SYS_PRINT,ignore.stderr=SYS_PRINT )
-	if ( !file.exists(paste(out,".lasso",sep='')) ) {
-	cat( paste(out,".lasso",sep='') , " LASSO output did not exist\n" )
-	eff.wgt = rep(NA,length(snp))
-	} else {
-	eff = read.table( paste(out,".lasso",sep=''),head=T,as.is=T)
-	eff.wgt = rep(0,length(snp))
-	m = match( snp , eff$SNP )
-	m.keep = !is.na(m)	
-	m = m[m.keep]
-	eff.wgt[m.keep] = eff$EFFECT[m]
-	}
-	return( eff.wgt )
+    #arg = paste( opt$PATH_plink , " --allow-no-sex --bfile " , input , 
+    #             " --lasso " , hsq , " --out " , out , sep='' )
+				 
+    system( arg , ignore.stdout=SYS_PRINT, ignore.stderr=SYS_PRINT )
+
+    if ( !file.exists(paste(out,".lasso",sep='')) ) {
+        cat( paste(out,".lasso",sep='') , " LASSO output did not exist\n" )
+        eff.wgt = rep(NA,length(snp))
+    } else {
+        eff = read.table( paste(out,".lasso",sep=''), head=T, as.is=T)
+        eff.wgt = rep(0,length(snp))
+        m = match( snp , eff$SNP )
+        m.keep = !is.na(m)	
+        m = m[m.keep]
+        eff.wgt[m.keep] = eff$EFFECT[m]
+    }
+    return( eff.wgt )
 }
+
 
 # Marginal Z-scores (used for top1)
 weights.marginal = function( genos , pheno , beta=F ) {
@@ -109,16 +117,41 @@ weights.marginal = function( genos , pheno , beta=F ) {
 	return( eff.wgt )
 }
 
-# Elastic Net
-weights.enet = function( genos , pheno , alpha=0.5 ) {
-	eff.wgt = matrix( 0 , ncol=1 , nrow=ncol(genos) )
+
+# Elastic Net: alpha=0.5 default
+ weights.enet = function( genos , pheno , alpha=0.1 ) {
+ 	eff.wgt = matrix( 0 , ncol=1 , nrow=ncol(genos) )
 	# remove monomorphics
 	sds = apply( genos  , 2 , sd )
 	keep = sds != 0 & !is.na(sds)
 	enet = cv.glmnet( x=genos[,keep] , y=pheno , alpha=alpha , nfold=5 , intercept=T , standardize=F )
-	eff.wgt[ keep ] = coef( enet , s = "lambda.min")[2:(sum(keep)+1)]
+	#eff.wgt[ keep ] = coef( enet , s = "lambda.min")[2:(sum(keep)+1)]
+	eff.wgt[ keep ] = coef( enet , s = 0.0001)[2:(sum(keep)+1)]
+
 	return( eff.wgt )
 }
+
+# Elastic Net with Alpha Tuning
+#weights.enet = function( genos , pheno ) {
+#	eff.wgt = matrix( 0 , ncol=1 , nrow=ncol(genos) )
+#	
+#	# Remove monomorphic SNPs
+#	sds = apply( genos, 2, sd )
+#	keep = sds != 0 & !is.na(sds)
+#
+#	# Tune alpha using cross-validation
+#	enet.tune = cva.glmnet(x=genos[,keep], y=pheno, nfolds=5, standardize=F)
+#	best.alpha = enet.tune$alpha[which.min(sapply(enet.tune$modlist, function(m) min(m$cvm)))]
+#
+#	# Train Elastic Net with best alpha
+#	enet = cv.glmnet(x=genos[,keep], y=pheno, alpha=best.alpha, nfold=5, standardize=F)
+#	
+#	# Extract coefficients at lambda.min
+#	eff.wgt[keep] = coef(enet, s = "lambda.min")[2:(sum(keep)+1)]
+#	
+#	return(eff.wgt)
+#}
+
 
 # --- CLEANUP
 cleanup = function() {

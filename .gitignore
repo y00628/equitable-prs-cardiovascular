@@ -1,7 +1,3 @@
-*.gz
-*.bed
-*.bim
-*.fam
 *.log
 *.tbi
 src/dsc180b_fusion
