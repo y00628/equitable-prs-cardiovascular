@@ -14,3 +14,18 @@ if __name__ == '__main__':
 
     if 'test' in args:
         test.test()
+
+    if 'data' in args:
+        if input("Re-download GWAS summary statistics? This may take a while. ([y/n]): ") == 'y':
+            print('Starting GBMI GWAS downloads')
+            data.download_gwas()
+            print('All GWAS files downloaded')
+        else:
+            print('Skipping GWAS download')
+        print('Splitting gene expression files for FUSION.compute_weights.R')
+        data.phenotype_split()
+        print('Gene expression splitting complete.')
+        print('Beginning filtering, and pruning and thresholding for LDREF samples and genotypes')
+        data.filter_and_prune_genotype()
+        
+        

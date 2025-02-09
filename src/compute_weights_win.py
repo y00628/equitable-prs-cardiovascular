@@ -63,8 +63,6 @@ def compute_weights_win(
         except subprocess.CalledProcessError as e:
             print(f"Error running command for gene {gene}, chromosome {chromosome}: {e}")
 
-
-
     for i in to_calc.index:
         gene_data = to_calc.loc[i]
         compute_weights_helper_win(gene_data['TargetID'], gene_data['Chr'])
