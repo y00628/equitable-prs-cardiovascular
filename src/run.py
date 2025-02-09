@@ -5,13 +5,22 @@ import subprocess
 import urllib.request
 import data
 import compute_weights_win
-import extract_data
 import sys
 
 if __name__ == '__main__':
     args = sys.argv[1:]
 
-    print('\nPress Ctrl-C to cancel at any point.\n')
+    print('\nPress Ctrl-C to terminate the program at any point.\n')
+
+    if not args:
+        print('Use the `help` argument to display a list of possible arguments.')
+
+    if 'help' in args:
+        print('`help`: List possible arguments')
+        print('`data`: Download and process data for model weight computation')
+        print('`compute_weights`: Compute model weights for comparison to \
+              \nGWAS summary statistics')
+        
 
     if 'data' in args:        
         if input("Download GWAS summary statistics? This may take a while. \n\
@@ -28,9 +37,9 @@ data/gwas/. \n([y/n]): ") == 'y':
 first time this is being run, enter 'y'. \n([y/n]): ") == 'y':
             print('Splitting gene expression files for FUSION.compute_weights.R')
             data.phenotype_split()
-            print('Gene expression splitting complete.')
+            print('Gene expression splitting complete.\n')
         else:
-            print('Skipping gene expression splitting.')
+            print('Skipping gene expression splitting.\n')
 
 
         if input("Filter and prune the LDREF samples and genotypes? \n If this \
