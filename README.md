@@ -14,6 +14,12 @@
 
     `git clone https://github.com/y00628/equitable-prs-cardiovascular.git`
 
+    If you are having problems due to the size of the repo causing early EOF try these steps in your terminal:
+    
+    1. `git config --global http.postBuffer 524288000`
+    
+    2. `git clone --config core.compression=0 https://github.com/y00628/equitable-prs-cardiovascular.git`
+
 1. Navigate to the repositories `src/` folder using:
 
     `cd path/to/equitable-prs-cardiovascular/src`
