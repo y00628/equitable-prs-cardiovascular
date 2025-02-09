@@ -34,17 +34,16 @@ def download_gwas(pops = ['eur', 'eas', 'amr', 'afr', '']):
             African: 'afr', 
             All: ''
     '''
-    os.makedirs('../data/gwas/', exist_ok=True)
+    os.makedirs('../data/raw/gwas/', exist_ok=True)
     count = 0
     for pop in pops:
         count += 1
         if pop:
             url = f"https://gbmi-sumstats.s3.amazonaws.com/HF_Bothsex_{pop}_inv_var_meta_GBMI_052021_nbbkgt1.txt.gz"
-            output_file = f"../data/gwas/HF_Bothsex_{pop}_inv_var_meta_GBMI_052021_nbbkgt1.txt.gz"
+            output_file = f"../data/raw/gwas/HF_Bothsex_{pop}_inv_var_meta_GBMI_052021_nbbkgt1.txt.gz"
         else:
             url = "https://gbmi-sumstats.s3.amazonaws.com/HF_Bothsex_inv_var_meta_GBMI_052021_nbbkgt1.txt.gz"
-            output_file = f"../data/gwas/HF_Bothsex_inv_var_meta_GBMI_052021_nbbkgt1.txt.gz"
-
+            output_file = f"../data/raw/gwas/HF_Bothsex_inv_var_meta_GBMI_052021_nbbkgt1.txt.gz"
         try:
             print(f"({count}/{len(pops)}) Downloading {url}")
             urllib.request.urlretrieve(url, output_file)
