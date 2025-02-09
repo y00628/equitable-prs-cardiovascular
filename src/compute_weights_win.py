@@ -9,20 +9,32 @@ def compute_weights_win(
         FUSION_SCRIPT="fusion_twas-master/FUSION.compute_weights.R", 
         BFILE_TEMPLATE="../data/LDREF_filtered/1000G.EUR.{chr}", 
         TMP_DIR="temp_files/", 
-        OUTPUT_DIR="compute_weights_out/chr_{chr}", 
+        OUTPUT_DIR="../data/weights/chr_{chr}", 
         MODELS="enet", 
         PLINK_PATH="plink.exe", 
         GCTA_PATH="fusion_twas-master/gcta_nr_robust.exe", 
         PHENO_DIR="../data/gene_expressions/chr_{chr}/", 
         VERBOSE=2
         ):
+    
+
+    '''
+    Runs FUSION.compute_weights.R
+    '''
+    if not chromosomes:
+        print('No chromosomes selected')
+        return
+    
+    os.makedirs(TMP_DIR, exist_ok=True)
+
+
     phenotypes = pd.read_csv('../data/std_GD462.GeneQuantRPKM.50FN.samplename.resk10.txt.gz', compression='gzip', sep='\t')
     if chromosomes:
         filtered_phenotypes = phenotypes[phenotypes['Chr'].isin(chromosomes)]
     else:
         filtered_phenotypes = phenotypes[~phenotypes['Chr'].isin(['X', 'Y', 'M'])]
     to_calc = filtered_phenotypes[['TargetID', 'Chr']]
-
+    count = 0
     def compute_weights_helper_win(gene, chromosome):
         """Runs the FUSION TWAS pipeline for a specific gene and chromosome."""
         # Construct file paths
@@ -53,7 +65,7 @@ def compute_weights_win(
         clear_command = ['rm', '-rf', f'{tmp_file_prefix}/*']
 
         # Print command for debugging
-        print(f"Running: {' '.join(command)}")
+        print(f"({count}/{to_calc.shape[0]}) Running: {' '.join(command)}")
         
         # Run the command
         try:
@@ -64,5 +76,6 @@ def compute_weights_win(
             print(f"Error running command for gene {gene}, chromosome {chromosome}: {e}")
 
     for i in to_calc.index:
+        count += 1
         gene_data = to_calc.loc[i]
         compute_weights_helper_win(gene_data['TargetID'], gene_data['Chr'])
