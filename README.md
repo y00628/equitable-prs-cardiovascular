@@ -15,7 +15,7 @@
     `git clone https://github.com/y00628/equitable-prs-cardiovascular.git`
 
     If you are having problems due to the size of the repo causing early EOF try these steps in your terminal:
-    
+
     1. `git config --global http.postBuffer 524288000`
     
     2. `git clone --config core.compression=0 https://github.com/y00628/equitable-prs-cardiovascular.git`
@@ -34,7 +34,13 @@
 
     * `Rscript install.packages(c('optparse','RColorBrewer'))`
 
+        * Alternatively you may need to try: 
+        `Rscript -e "install.packages(c('optparse','RColorBrewer'), repos='http://cran.rstudio.com/')"`
+
     * `Rscript install.packages(c('glmnet','methods'))`
+
+        * Again, try the following if you encounter an error: 
+        `Rscript -e "install.packages(c('glmnet','methods'), repos='http://cran.rstudio.com/')"`
 
 1. The code can be run using:
     `py run.py <arg1> <arg2> ...`
