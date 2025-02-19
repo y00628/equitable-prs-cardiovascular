@@ -1,0 +1,16 @@
+PANEL	FILE	ID	CHR	P0	P1	HSQ	BEST.GWAS.ID	BEST.GWAS.Z	EQTL.ID	EQTL.R2	EQTL.Z	EQTL.GWAS.Z	NSNP	NWGT	MODEL	MODELCV.R2	MODELCV.PV	TWAS.Z	TWAS.P
+NA	/Users/yiting/Desktop/cap3/out/compute_weights_out2/ENSG00000227039.1_chr21.wgt.RDat	ITGB2-AS1	21	44921050	44927667	0.178	rs2246417	 3.20	rs8134646	 0.07782	 5.36	-0.429	 77	 1	top1	0.078	9.4e-08	-0.429	0.6682
+NA	/Users/yiting/Desktop/cap3/out/compute_weights_out2/ENSG00000223799.1_chr21.wgt.RDat	IL10RB-AS1	21	33263872	33266260	0.230	rs12482067	 2.28	rs2284550	 0.16022	-7.46	 1.235	 72	15	enet	0.21	3.9e-19	-1.676	0.0938
+NA	/Users/yiting/Desktop/cap3/out/compute_weights_out2/ENSG00000160285.9_chr21.wgt.RDat	LSS	21	46188140	46228824	0.125	rs2277821	 2.87	rs2839168	 0.01854	 3.54	 0.723	 64	 1	top1	0.019	0.0067	 0.723	0.4695
+NA	/Users/yiting/Desktop/cap3/out/compute_weights_out2/ENSG00000160213.5_chr21.wgt.RDat	CSTB	21	43772511	43776445	0.241	rs2838408	-2.27	rs2838363	 0.09760	 6.09	 0.623	 68	12	enet	0.13	1.5e-12	-0.162	0.8712
+NA	/Users/yiting/Desktop/cap3/out/compute_weights_out2/ENSG00000154721.9_chr21.wgt.RDat	JAM2	21	25639271	25714573	0.090	rs436587	-2.96	rs7278807	 0.02490	-3.11	-1.099	 33	 1	top1	0.025	0.002	 1.099	0.2717
+NA	/Users/yiting/Desktop/cap3/out/compute_weights_out2/ENSG00000183570.9_chr21.wgt.RDat	PCBP3	21	45643693	45942454	0.061	NA	   NA	NA	      NA	   NA	    NA	 69	 0	top1	0.049	2.2e-05	    NA	    NA
+NA	/Users/yiting/Desktop/cap3/out/compute_weights_out2/ENSG00000160207.4_chr21.wgt.RDat	HSF2BP	21	43529191	43659493	0.129	NA	   NA	NA	      NA	   NA	    NA	 63	 0	enet	0.067	7.3e-07	    NA	    NA
+NA	/Users/yiting/Desktop/cap3/out/compute_weights_out2/ENSG00000160188.5_chr21.wgt.RDat	RSPH1	21	42472485	42493079	0.379	rs4920059	 2.63	rs17115062	 0.03539	 5.81	-1.289	116	21	enet	0.16	1.5e-14	 1.052	0.2929
+NA	/Users/yiting/Desktop/cap3/out/compute_weights_out2/ENSG00000182362.9_chr21.wgt.RDat	YBEY	21	46286336	46297751	0.232	rs2277821	 2.59	rs2839160	 0.02237	 4.34	 0.958	 62	32	enet	0.094	4e-09	 0.521	0.6023
+NA	/Users/yiting/Desktop/cap3/out/compute_weights_out2/ENSG00000159082.12_chr21.wgt.RDat	SYNJ1	21	32628758	32728048	0.088	rs2834097	 2.17	rs12482256	 0.00217	 2.63	 1.829	 65	 1	top1	0.0022	0.19	 1.829	0.0674
+NA	/Users/yiting/Desktop/cap3/out/compute_weights_out2/ENSG00000154719.9_chr21.wgt.RDat	MRPL39	21	25585655	25607517	0.113	rs436587	-2.96	rs2829875	 0.02920	-4.06	 0.402	 31	 1	top1	0.029	0.00088	-0.402	0.6879
+NA	/Users/yiting/Desktop/cap3/out/compute_weights_out2/ENSG00000237232.2_chr21.wgt.RDat	ZNF295-AS1	21	42022022	42024951	0.171	rs4920059	 2.63	rs8132555	-0.00137	 3.25	-1.286	151	25	enet	0.059	3.6e-06	-1.587	0.1126
+NA	/Users/yiting/Desktop/cap3/out/compute_weights_out2/ENSG00000159228.8_chr21.wgt.RDat	CBR1	21	36069940	36073166	0.157	rs2835154	 2.95	rs2835269	 0.04589	-4.84	 0.886	 48	 8	enet	0.058	4.2e-06	-0.335	0.7375
+NA	/Users/yiting/Desktop/cap3/out/compute_weights_out2/ENSG00000188992.6_chr21.wgt.RDat	LIPI	21	14108812	14210845	0.172	rs2822670	-2.79	rs2822383	 0.01361	-3.82	 1.174	 70	 3	lasso	0.029	0.001	-1.094	0.2741
+NA	/Users/yiting/Desktop/cap3/out/compute_weights_out2/ENSG00000160284.10_chr21.wgt.RDat	SPATC1L	21	46161147	46184476	0.302	rs2277821	 2.70	rs2839160	 0.17691	 7.89	 0.954	 63	38	enet	0.18	4.9e-17	 0.898	0.3690
