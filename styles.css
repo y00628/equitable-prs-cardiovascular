@@ -70,3 +70,25 @@ section {
     padding: 20px;
     border-bottom: 1px solid #ccc;
 }
+
+/* Center the image */
+#methods img {
+    display: block;
+    margin: 20px auto;  /* Centers the image horizontally */
+    max-width: 40%;  /* Adjust width if needed */
+    height: auto;
+}
+
+/* Reduce spacing between subsections */
+.sub-section {
+    min-height: 50vh;  /* Reduces section height to half of the viewport */
+    padding: 10px 0;  /* Reduce extra padding */
+    border: none !important;
+}
+
+/* Reduce space between headers and content */
+h3 {
+    margin: 5px 0; /* Reduce space above and below */
+    font-size: 18px;
+}
+
