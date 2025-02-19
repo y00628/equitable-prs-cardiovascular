@@ -5,6 +5,9 @@ body {
     background-color: #00629B;
     color: #FFCD00
 }
+html {
+    scroll-behavior: smooth;
+}
 
 .sidebar {
     position: fixed;
