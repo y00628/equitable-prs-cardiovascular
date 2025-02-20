@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const sections = document.querySelectorAll("section");
+    const sections = document.querySelectorAll(".body-section-header");
     const navLinks = document.querySelectorAll(".content-section");
 
     // Smooth scrolling
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let scrollPosition = window.scrollY;
 
         sections.forEach(section => {
-            const sectionTop = section.offsetTop - 50; // Adjust for header height
+            const sectionTop = section.offsetTop - 20; // Adjust for header height
             const sectionHeight = section.offsetHeight;
             const sectionId = section.getAttribute("id");
 
