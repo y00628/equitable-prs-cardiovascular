@@ -16,37 +16,53 @@
         <!-- Sidebar Navigation -->
         <nav class="sidebar">
             <section class="contents">
-                <a class="content-section" href="#intro-header">Intro</a>
-                <a class="content-section" href="#data-header">Data</a>
-                <a class="content-section" href="#methods-header">Methods</a>
-                <a class="content-section" href="#results-header">Results</a>
-                <a class="content-section" href="#additional-content-header">Additional Content</a>
+                <a class="content-section" href="#intro-section">Intro</a>
+                <a class="content-section" href="#data-section">Data</a>
+                <a class="content-section" href="#methods-section">Methods</a>
+                <a class="content-section" href="#results-section">Results</a>
+                <a class="content-section" href="#additional-content-section">Additional Content</a>
             </section>
         </nav>
 
         <!-- Main Content -->
         <main class="content">
-            <header class="body-section-header" id="intro-header"><h2>Intro</h2></header>
-            <section class="body-section" id="intro">Intro</section>
-            
-            <header class="body-section-header" id="data-header"><h2>Data</h2></header>
-            <section class="body-section" id="data">Data</section>
-            
-            <header class="body-section-header" id="methods-header"><h2>Methods</h2></header>
-            <section class="body-section" id="methods">
-                <img src="assets/method_flowchart.png" alt="Method Flowchart">
-                <section class="sub-section" id="data-filtering"><h3>Data Filtering</h3></section>
-                <section class="sub-section" id="computing-weights"><h3>Compute SNP weights</h3></section>
-                <section class="sub-section" id="assoc-test"><h3>Association Testing</h3></section>
-                <section class="sub-section" id="cross-pop-assoc-analysis"><h3>Cross-Population Gene Association Analysis</h3></section>
-            </section>
-            
-            <header class="body-section-header" id="results-header"><h2>Results</h2></header>
-            <section class="body-section" id="results">Results</section>
-            
-            <header class="body-section-header" id="additional-content-header"><h2>Additional Content</h2></header>
-            <section class="body-section" id="additional-content">Additional Content</section>
+            <!-- Introduction -->
+            <div class="body-section" id="intro-section">
+                <header class="body-section-header" id="intro-header"><h2>Intro</h2></header>
+                <section class="body-section-content" id="intro">Intro</section>
+            </div>
+            <!-- Data -->
+            <div class="body-section" id="data-section">
+                <header class="body-section-header" id="data-header"><h2>Data</h2></header>
+                <section class="body-section-content" id="data">Data</section>
+            </div>
+            <!-- Methods -->
+            <div class="body-section" id="methods-section">
+                <header class="body-section-header" id="methods-header"><h2>Methods</h2></header>
+                <section class="body-section-content" id="methods">
+                    <img src="assets/method_flowchart.png" alt="Method Flowchart">
+                    <section class="sub-section" id="data-filtering"><h3>Data Filtering</h3></section>
+                    <section class="sub-section" id="computing-weights"><h3>Compute SNP weights</h3></section>
+                    <section class="sub-section" id="assoc-test"><h3>Association Testing</h3></section>
+                    <section class="sub-section" id="cross-pop-assoc-analysis"><h3>Cross-Population Gene Association Analysis</h3></section>
+                </section>
+            </div>
+            <!-- Results -->
+            <div class="body-section" id="results-section">
+                <header class="body-section-header" id="results-header"><h2>Results</h2></header>
+                <section class="body-section-content" id="results">Results</section>
+            </div>
+            <!-- Additional Content -->
+            <div class="body-section" id="additional-content-section">
+                <header class="body-section-header" id="additional-content-header"><h2>Additional Content</h2></header>
+                <section class="body-section-content" id="additional-content">Additional Content</section>
+            </div>
         </main>
+
+        <!-- Right Sidebar for additional info for each section. Text is in script.js-->
+        <aside class="right-sidebar">
+            <div id="right-sidebar-content">Welcome! Scroll to see more info.</div>
+        </aside>
 
         <script src="script.js"></script>
     </body>
