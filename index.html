@@ -6,33 +6,48 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
+        <!-- Persistent Header -->
+        <header class="top-header">            
+            <a class="project-name" href="index.html">
+                Effectiveness of PRS Models Across Populations for Cardiovascular Diseases
+            </a>
+        </header>
+
+        <!-- Sidebar Navigation -->
         <nav class="sidebar">
-            <a class="project-name" href="index.html">Effectiveness of PRS Models Across Populations for Cardiovascular Diseases</a>
             <section class="contents">
-                <a class="content-section" href="#intro">Intro</a>
-                <a class="content-section" href="#data">Data</a>
-                <a class="content-section" href="#methods">Methods</a>
-                <a class="content-section" href="#results">Results</a>
-                <a class="content-section" href="#additional-content">Additional Content</a>
+                <a class="content-section" href="#intro-header">Intro</a>
+                <a class="content-section" href="#data-header">Data</a>
+                <a class="content-section" href="#methods-header">Methods</a>
+                <a class="content-section" href="#results-header">Results</a>
+                <a class="content-section" href="#additional-content-header">Additional Content</a>
             </section>
         </nav>
 
+        <!-- Main Content -->
         <main class="content">
-            <section class="body-section" id="intro"><h2>Intro</h2></section>
-            <section class="body-section" id="data"><h2>Data</h2></section>
-
-            <section class="body-section" id="methods"><h2>Methods</h2>
+            <header class="body-section-header" id="intro-header"><h2>Intro</h2></header>
+            <section class="body-section" id="intro">Intro</section>
+            
+            <header class="body-section-header" id="data-header"><h2>Data</h2></header>
+            <section class="body-section" id="data">Data</section>
+            
+            <header class="body-section-header" id="methods-header"><h2>Methods</h2></header>
+            <section class="body-section" id="methods">
                 <img src="assets/method_flowchart.png" alt="Method Flowchart">
                 <section class="sub-section" id="data-filtering"><h3>Data Filtering</h3></section>
                 <section class="sub-section" id="computing-weights"><h3>Compute SNP weights</h3></section>
                 <section class="sub-section" id="assoc-test"><h3>Association Testing</h3></section>
                 <section class="sub-section" id="cross-pop-assoc-analysis"><h3>Cross-Population Gene Association Analysis</h3></section>
             </section>
-
-            <section class="body-section" id="results"><h2>Results</h2></section>
-            <section class="body-section" id="additional-content"><h2>Additional Content</h2></section>
+            
+            <header class="body-section-header" id="results-header"><h2>Results</h2></header>
+            <section class="body-section" id="results">Results</section>
+            
+            <header class="body-section-header" id="additional-content-header"><h2>Additional Content</h2></header>
+            <section class="body-section" id="additional-content">Additional Content</section>
         </main>
-        <script src="script.js"></script>
 
+        <script src="script.js"></script>
     </body>
 </html>

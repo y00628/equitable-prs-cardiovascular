@@ -3,17 +3,20 @@ body {
     margin: 0;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     background-color: #00629B;
-    color: #FFCD00
+    color: #FFCD00;
+    padding-top: 40px; /* Adjust based on header height */
+    display: flex;
 }
 
 
 .sidebar {
     position: fixed;
     left: 0;
-    top: 0;
-    width: 250px;
+    top: 60px;
+    bottom: 0;
+    width: 200px;
     height: 100vh;
-    background-color: #182B49;
+    background-color: #C69214;
     color: white;
     padding: 20px;
     display: flex;
@@ -23,11 +26,55 @@ body {
 .project-name {
     color: #C69214;
     text-decoration: none;
+    text-align: left;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 18px;
+    font-size: 32px;
     font-weight: bold;
     margin-bottom: 20px;
     display: block;
+}
+.top-header {
+    background-color: #182B49;  /* UCSD Blue */
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    position: fixed; /* Keeps it at the top */
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensures it's above other elements */
+}
+
+/* Main content pushes over */
+.content {
+    flex-grow: 1;
+    margin-left: 220px; /* Adjust for sidebar width */
+    padding: 20px;
+}
+
+.body-section-header {
+    background-color: #00629B; /* White background for the boxes */
+    padding: 25px;
+    text-align: left;
+    font-size: 20px;
+    margin-bottom: 20px; /* Space between sections */
+    max-width: 800px; /* Limit width for better readability */
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.body-section {
+    background-color: white; /* White background for the boxes */
+    padding: 20px;
+    color: black;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-bottom: 20px; /* Space between sections */
+    max-width: 1100px; /* Limit width for better readability */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .contents {
@@ -36,7 +83,7 @@ body {
 }
 
 .content-section {
-    color: #C69214;
+    color: #182B49;
     text-decoration: none;
     padding: 10px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
