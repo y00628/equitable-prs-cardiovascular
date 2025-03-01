@@ -8,5 +8,8 @@ scikit-learn
 glimix-core
 numpy-sugar
 pyreadr
+upsetplot
+matplotlib
+seaborn
 
 
