@@ -4,7 +4,9 @@ import os
 import subprocess
 import urllib.request
 import data
-import compute_weights_win
+import compute_weights
+import association_test
+import generate_plots
 import sys
 
 if __name__ == '__main__':
@@ -17,9 +19,12 @@ if __name__ == '__main__':
 
     if 'help' in args:
         print('`help`: List possible arguments')
-        print('`data`: Download and process data for model weight computation')
+        print('`data`: Download and process data for model weight computation \
+and cross population analyses')
         print('`compute_weights`: Compute model weights for comparison to \
               \nGWAS summary statistics')
+        print('`association_test`: Run association tests between calculated SNP weights for European samples \
+\n against GWAS sumstats for European, East Asian, African, and American populations.')
         
 
     if 'data' in args:        
@@ -46,21 +51,74 @@ first time this is being run, enter 'y'. \n([y/n]): ") == 'y':
 is the first time this is being run, enter 'y'. \n([y/n]): ") == 'y':            
             print('Beginning filtering, and pruning and thresholding for LDREF samples and genotypes')
             data.filter_and_prune_genotype()
+        else:
+            print('Skipping filtering and pruning.')
+
+        print('Data processing complete!')
 
         
     if 'compute_weights' in args:
-        print('\nWARNING: This code takes incredibly long to run and may take \
+        print('\nWARNING: The weights have been precomputed for your convenience. \
+\nRunning the code to recompute the weights will take incredibly long to run and may take \
 \nanywhere from several hours to several days to finish running, depending\
-\non your machine and the chromosome chosen. The weights for chromosome 19\
-\nhave already been computed if you would like to test further functions.\n')
-        ldref_yn = input('Would you like to use the pruned LDREF instead of just the filtered LDREF? ([y/n]): ')
-        BFILE_TEMPLATE="../data/LDREF_filtered/1000G.EUR.{chr}"
-        if ldref_yn == 'y':
-            BFILE_TEMPLATE="../data/LDREF_pruned/1000G.EUR.{chr}"
-
-         
-        compute_weights_win.compute_weights_win(
+\non your machine.')
+        if input("Run weight computation anyway (recommended not to)? \n([y/n]): ") == 'y':            
+            print('Beginning filtering, and pruning and thresholding for LDREF samples and genotypes')            
+            BFILE_TEMPLATE=os.path.join("..","data","LDREF_pruned","1000G.EUR.{chr}")
+            compute_weights.compute_weights(
             chromosomes=list(str(input("Which chromosome would you like to compute weights for (1-22): "))), 
-            BFILE_TEMPLATE=BFILE_TEMPLATE,
-            VERBOSE=0
+                BFILE_TEMPLATE=BFILE_TEMPLATE,
+                VERBOSE=0
             )
+            print("Done!")
+        else:
+            print('Skipping weight computations.')
+
+            
+    if 'association_test' in args:
+        if input("Gene position files have already been created for FUSION.assoc_test.R for your convenience. \
+\nRecreate gene position files anyway? \n This might take a few minutes. \n([y/n]): ") == 'y':
+            print("Creating gene position files for FUSION.assoc_test.R...")
+            association_test.create_pos_files()
+            print('Done!')
+        else:
+            print('Skipping gene position file creation.')
+
+        print("Generating list of SNPs FUSION.assoc_test.R...")
+        association_test.generate_snp_list()
+        print('Done!')
+
+        if input("Process GWAS summary statistics for FUSION.assoc_test.R? \n If this \
+is the first time this is being run, enter 'y'. \n([y/n]): ") == 'y':
+            print('Processing GWAS files for FUSION.assoc_test.R...')
+            association_test.process_sumstats()
+            print('Done!')
+
+        if input("Run association tests? \n([y/n]): ") == 'y':  
+            association_test.association_test()
+        else:
+            print('Skipping association tests')     
+
+    if 'generate_plots' in args:
+        if input("Generate gene loci plot? \n([y/n]): ") == 'y':  
+            print('Generating gene loci plot...')
+            generate_plots.gene_loci()
+            print('Done!')
+        if input("Generate gene venn diagram? \n([y/n]): ") == 'y':  
+            print('Generating gene venn diagram')
+            generate_plots.generate_venn()
+            print('Done!')
+        if input("Generate Manhattan plots? This might take a couple minutes. \n([y/n]): ") == 'y':  
+            print('Creating Manhattan plots...')
+            generate_plots.manhattan()
+            print('Done!')
+        if input("Generate Miami plots? This might take a couple minutes. \n([y/n]): ") == 'y':  
+            print('Creating Miami plots...')
+            generate_plots.miami()  
+            print('Done!')
+        if input("Create GO plots? \n([y/n]): ") == 'y':  
+            print('Creating GO plots.')
+            generate_plots.go_plots()
+            print('Done!')
+            
+

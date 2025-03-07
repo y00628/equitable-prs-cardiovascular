@@ -11,5 +11,5 @@ pyreadr
 upsetplot
 matplotlib
 seaborn
-
+adjustText
 

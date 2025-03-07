@@ -3,6 +3,31 @@ import pandas as pd
 import numpy as np
 import subprocess
 import urllib.request
+from sys import platform
+plat_os = platform
+
+PLINK_PATH="plink.exe"
+if plat_os != 'win32':
+    PLINK_PATH = "./plink"
+
+POS_FILE_OUTPUT_DIR = os.path.join("..", "data", "pos_files")
+os.makedirs(POS_FILE_OUTPUT_DIR, exist_ok=True)
+FUSION_COMPUTE_SCRIPT = os.path.join("fusion_twas-master","FUSION.compute_weights.R")
+RSCRIPT_PATH="Rscript"
+BFILE_EQTL_TEMPLATE = os.path.join("..","data","LDREF_filtered","1000G.EUR.{chr}_filtered")  # Raw genotype data
+BFILE_TEMPLATE = os.path.join("..","data","LDREF_cis_eqtls","1000G.EUR.{chr}")  # Cis-eQTL processed data
+TMP_DIR = "temp_files"
+GCTA_PATH = os.path.join("fusion_twas-master","gcta64")
+PHENO_DIR = os.path.join("..","data","gene_expressions","chr_{chr}")  # Directory with phenotype files
+
+
+CIS_WINDOW = 500_000  # 500kb cis-window
+MAF_THRESHOLD = 0.01  # Minor allele frequency filter
+HWE_THRESHOLD = 1e-6  # Hardy-Weinberg filter
+LD_PRUNE_WINDOW = 50  # LD pruning window size
+LD_PRUNE_STEP = 5  # LD pruning step size
+LD_PRUNE_R2 = 0.2  # LD pruning R^2 threshold
+VERBOSE = 2
 
 def standardize_phenotype(out='../data/std_GD462.GeneQuantRPKM.50FN.samplename.resk10.txt.gz'):
     '''
@@ -11,8 +36,8 @@ def standardize_phenotype(out='../data/std_GD462.GeneQuantRPKM.50FN.samplename.r
     
     '''
     print('Loading gene expression data for standardization...')
-    all_sample_fid = pd.read_csv('../data/raw/LDREF/1000G.EUR.1.fam', header=None, sep=' ')[0].unique()
-    all_genes = pd.read_csv('../data/GD462.GeneQuantRPKM.50FN.samplename.resk10.txt.gz', sep='\t')
+    all_sample_fid = pd.read_csv(os.path.join("..","data","raw","LDREF","1000G.EUR.1.fam"), header=None, sep=' ')[0].unique()
+    all_genes = pd.read_csv(os.path.join("..","data","GD462.GeneQuantRPKM.50FN.samplename.resk10.txt.gz"), sep='\t')
     all_genes = all_genes[['TargetID', 'Chr', 'Coord']+[c for c in all_genes.columns[4:] if c in all_sample_fid]]
     to_std = all_genes[all_genes.columns[4:]].T
     print('Standardizing gene expressions...')
@@ -34,16 +59,16 @@ def download_gwas(pops = ['eur', 'eas', 'amr', 'afr', '']):
             African: 'afr', 
             All: ''
     '''
-    os.makedirs('../data/raw/gwas/', exist_ok=True)
+    os.makedirs(os.path.join("..","data","raw","gwas",""), exist_ok=True)
     count = 0
     for pop in pops:
         count += 1
         if pop:
             url = f"https://gbmi-sumstats.s3.amazonaws.com/HF_Bothsex_{pop}_inv_var_meta_GBMI_052021_nbbkgt1.txt.gz"
-            output_file = f"../data/raw/gwas/HF_Bothsex_{pop}_inv_var_meta_GBMI_052021_nbbkgt1.txt.gz"
+            output_file = os.path.join("..","data","raw","gwas",f"HF_Bothsex_{pop}_inv_var_meta_GBMI_052021_nbbkgt1.txt.gz")
         else:
             url = "https://gbmi-sumstats.s3.amazonaws.com/HF_Bothsex_inv_var_meta_GBMI_052021_nbbkgt1.txt.gz"
-            output_file = f"../data/raw/gwas/HF_Bothsex_inv_var_meta_GBMI_052021_nbbkgt1.txt.gz"
+            output_file = os.path.join("..","data","raw","gwas","HF_Bothsex_inv_var_meta_GBMI_052021_nbbkgt1.txt.gz")
         try:
             print(f"({count}/{len(pops)}) Downloading {url}")
             urllib.request.urlretrieve(url, output_file)
@@ -61,11 +86,11 @@ def phenotype_split():
     '''
     print('Loading gene expression data for splitting...')
     all_sample_fid = pd.read_csv(\
-            '../data/LDREF/1000G.EUR.1.fam', header=None, sep=' '
+            os.path.join("..","data","LDREF","1000G.EUR.1.fam"), header=None, sep=' '
         )[0].unique()
     try:
         all_genes = pd.read_csv(\
-            '../data/std_GD462.GeneQuantRPKM.50FN.samplename.resk10.txt.gz', \
+            os.path.join("..","data","std_GD462.GeneQuantRPKM.50FN.samplename.resk10.txt.gz"), \
                 sep='\t')
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -90,9 +115,9 @@ def phenotype_split():
             columns={'index': 'FID', i: 'Expression'})
         temp_df['IID'] = temp_df['FID']
         temp_df = temp_df[['FID', 'IID', 'Expression']]
-        os.makedirs(f'../data/gene_expressions/chr_{temp_chrom}/', exist_ok=True)
+        os.makedirs("..","data","gene_expressions",f"chr_{temp_chrom}", exist_ok=True)
         temp_df.to_csv(\
-            f'../data/gene_expressions/chr_{temp_chrom}/{gene_name}.txt', \
+            os.path.join("..","data","gene_expressions",f"chr_{temp_chrom}",f"{gene_name}.txt"), \
                 index=False, header=None, sep='\t')  
     print('Splitting complete')
 
@@ -110,10 +135,10 @@ def filter_and_prune_genotype():
     '''
 
     # Path to your input files and desired output folder
-    original_file = "../data/raw/LDREF/1000G.EUR."
-    keep_file = "../data/samples.txt"
-    output_dir_filter = "../data/LDREF_filtered"  # Directory where filtered files will be stored
-    output_dir_pruned = "../data/LDREF_pruned"  # Directory where filtered files will be stored
+    original_file = os.path.join("..","data","raw","LDREF","1000G.EUR.")
+    keep_file = os.path.join("..","data","samples.txt")
+    output_dir_filter = os.path.join("..","data","LDREF_filtered")  # Directory where filtered files will be stored
+    output_dir_pruned = os.path.join("..","data","LDREF_pruned")  # Directory where filtered files will be stored
 
     os.makedirs(output_dir_filter, exist_ok=True)  # Ensure the output directory exists
     os.makedirs(output_dir_pruned, exist_ok=True)  # Ensure the output directory exists
@@ -126,8 +151,8 @@ def filter_and_prune_genotype():
     # Loop through chromosomes 1 to 22
     for chrom in range(1, 23):
         print(f'Beginning filtering, and pruning and thresholding for chromosome {chrom}')
-        filtered_file = f"{output_dir_filter}/1000G.EUR.{chrom}"
-        pruned_prefix = f"{output_dir_pruned}/1000G.EUR.{chrom}"
+        filtered_file = os.path.join(output_dir_filter,f"1000G.EUR.{chrom}")
+        pruned_prefix = os.path.join(output_dir_pruned,f"1000G.EUR.{chrom}")
 
         # Step 1: Filter samples using --keep
         filter_command = [
