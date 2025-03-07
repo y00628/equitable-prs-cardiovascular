@@ -46,7 +46,7 @@ def standardize_phenotype(out='../data/std_GD462.GeneQuantRPKM.50FN.samplename.r
     all_genes.to_csv(out, sep='\t')
 
 
-def download_gwas(pops = ['eur', 'eas', 'amr', 'afr', '']):
+def download_gwas(pops = ['eur', 'eas', 'amr', 'afr']):
     '''
     Downloads GBMI GWAS summary statistics.
 
@@ -72,6 +72,12 @@ def download_gwas(pops = ['eur', 'eas', 'amr', 'afr', '']):
         try:
             print(f"({count}/{len(pops)}) Downloading {url}")
             urllib.request.urlretrieve(url, output_file)
+            copy_command = [
+                "cp",
+                output_file, os.path.join("..","data","gwas",f"HF_Bothsex_{pop}_inv_var_meta_GBMI_052021_nbbkgt1.txt.gz"),
+                ]
+            subprocess.run(copy_command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        
             print("Download completed successfully.")
         except Exception as e:
             print(f"An error occurred: {e}")
