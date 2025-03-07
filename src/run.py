@@ -96,6 +96,9 @@ is the first time this is being run, enter 'y'. \n([y/n]): ") == 'y':
         if input("Run association tests? \n([y/n]): ") == 'y':  
             association_test.association_test()
         else:
-            print('Skipping association tests')          
+            print('Skipping association tests')     
+
+    if 'generate_plots' in args:
+        ...     
             
 
