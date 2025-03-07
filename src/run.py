@@ -25,12 +25,11 @@ and cross population analyses')
               \nGWAS summary statistics')
         print('`association_test`: Run association tests between calculated SNP weights for European samples \
 \n against GWAS sumstats for European, East Asian, African, and American populations.')
+        print('`generate_plots`: Generate plots from association_test results.')
         
 
     if 'data' in args:        
-        if input("Download GWAS summary statistics? This may take a while. \n\
-Check that the 5 GWAS sumstats files are not already in \
-data/gwas/. \n([y/n]): ") == 'y':
+        if input("Download GWAS summary statistics? This may take a while. \n([y/n]): ") == 'y':
             print('Starting GBMI GWAS downloads\n')
             data.download_gwas()
             print('All GWAS files downloaded\n')
