@@ -39,6 +39,123 @@ def get_all_dat(directory):
   dat_files = list(directory.rglob("*.dat"))
   return dat_files
 
+def gene_loci():
+    assoc_test_fps = get_all_dat(os.path.join('..', 'data', 'gene_associations'))
+
+    all_dfs = []
+    for fp in assoc_test_fps:
+        temp_df = pd.read_table(fp).drop(columns=['PANEL', 'FILE'])
+        population = re.findall(r'chr\d+.(\w{3})', str(fp))[0]
+        temp_df['TWAS.P'] = temp_df['TWAS.P'].apply(str_to_float)
+        temp_df['TWAS.Z'] = temp_df['TWAS.Z'].apply(str_to_float)
+        temp_df['POP'] = population
+        temp_df = temp_df[(temp_df['TWAS.P'].notna()) & (temp_df['TWAS.Z'].notna())]
+        temp_df = temp_df[temp_df['TWAS.P'] <= 0.05]
+        all_dfs.append(temp_df)
+    all_chrs_pops = pd.concat(all_dfs, ignore_index=True)
+
+
+    eur_gene_loci = all_chrs_pops[(all_chrs_pops['POP'] == 'eur')]
+    eas_gene_loci = all_chrs_pops[(all_chrs_pops['POP'] == 'eas')]
+    amr_gene_loci = all_chrs_pops[(all_chrs_pops['POP'] == 'amr')]
+    afr_gene_loci = all_chrs_pops[(all_chrs_pops['POP'] == 'afr')]
+
+    populations = {
+        'EUR': eur_gene_loci,
+        'EAS': eas_gene_loci,
+        'AMR': amr_gene_loci,
+        'AFR': afr_gene_loci,
+        
+    }
+
+    # Get chromosome boundaries from all data
+    all_data = pd.concat(populations.values())
+    chrom_boundaries = all_data.groupby("CHR").agg({"P0": "min", "P1": "max"}).reset_index()
+    chrom_boundaries.rename(columns={"P0": "Min", "P1": "Max"}, inplace=True)
+
+    # Calculate the min and max TWAS.P values across all populations
+    min_pval = all_data["TWAS.P"].min()
+    max_pval = all_data["TWAS.P"].max()
+
+    # Create a figure with subplots for each chromosome horizontally
+    n_chromosomes = len(chrom_boundaries)
+    fig, axes = plt.subplots(1, n_chromosomes, figsize=(30, 4), sharey=True)
+
+    # Plot for each population and chromosome
+    for j, (chrom_idx, row) in enumerate(chrom_boundaries.iterrows()):
+        ax = axes[j]  # Get the corresponding axis for the chromosome
+
+        # Plot reference genome lines for all populations on this chromosome
+        for i, (pop, df) in enumerate(populations.items()):
+            ypos = i + 1  # The y-position is the row number for the population
+            chrom_genes = df[df["CHR"] == row["CHR"]]
+            
+            for _, gene in chrom_genes.iterrows():
+                # Normalize the TWAS.P value to get opacity (alpha) between 0 and 1
+                p_value = gene["TWAS.P"]
+                alpha = (p_value - min_pval) / (max_pval - min_pval)  # Normalized p-value between 0 and 1
+                
+                # Ensure alpha stays between 0 and 1
+                alpha = min(max(alpha, 0), 1)
+
+                # Plot the gene as an arrow with the corresponding opacity
+                arrow = patches.FancyArrow(
+                    gene["P0"], ypos, gene["P1"] - gene["P0"], 0,
+                    width=0.05, head_width=0.15, head_length=20, 
+                    color="blue", alpha=alpha,  # Apply opacity here
+                    length_includes_head=True
+                )
+                ax.add_patch(arrow)
+
+        # Set x-axis limits for this chromosome
+        ax.set_xlim(row["Min"] - 100, row["Max"] + 100)  # Add some padding around the gene region
+        ax.set_ylim(0, len(populations) + 1)  # Keep a consistent y-axis range
+
+        # Label the chromosomes (set to be shown on all subplots)
+        ax.set_xlabel(f"Chr {row['CHR']}", fontsize=10)
+            
+        # Remove x-axis ticks (hide the scale)
+        ax.set_xticks([])
+
+        # Remove y-axis ticks for clarity
+        ax.set_yticks([])
+
+        # Keep only the left and bottom spines visible, remove top and right spines
+        for spine in ['top', 'right']:
+            ax.spines[spine].set_visible(False)
+        if j != 0:  # Remove left spine for all but the first subplot
+            ax.spines['left'].set_visible(False)
+
+    # Set y-axis labels only on the first subplot for populations with spacing
+    for i, (pop, _) in enumerate(populations.items()):
+        axes[0].text(-0.15, i + 1, pop, ha='right', va='center', fontsize=12)  # Adjust the x-position for spacing
+
+    # Add custom legend for opacity
+    # Create a color map and normalization for opacity based on p-values
+    norm = mcolors.Normalize(vmin=min_pval, vmax=max_pval)
+    cmap = mcolors.LinearSegmentedColormap.from_list("pval_opacity", ["blue", "white"])
+
+    # Create a color bar (or legend) using the colormap
+    sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
+    sm.set_array([])  # Empty array for the color bar to work
+    cax = fig.add_axes([0.87, 1, 0.1, 0.05])  # Adjust these values to fit your needs
+    cbar = fig.colorbar(sm, cax=cax, orientation='horizontal', )
+    cbar.set_label('TWAS P-value', rotation=0)
+    cbar.set_ticks([0, 0.05])
+
+
+
+    fig.suptitle('Multi-Population Gene Loci')
+    #fig.supylabel('Population')
+    fig.supxlabel('Chromosome')
+
+    # Adjust layout and spacing between subplots
+    plt.tight_layout(w_pad=0)
+    print(f"Saved gene_loci plot to {os.path.join("..","plots","gene_loci.png")}")
+    plt.savefig(os.path.join("..","plots","gene_loci.png"))
+
+
+
 def generate_venn():
     assoc_test_fps = get_all_dat(os.path.join('..', 'data', 'gene_associations'))
 
@@ -151,10 +268,10 @@ def manhattan_helper(pop, p_threshold_significance=5e-8, subsample_cutoff=5e-1, 
     plt.savefig(f'../plots/manhattan/{pop}_manhattan_v4.png')
 
 def manhattan():
-    manhattan_helper('eur')
-    manhattan_helper('eas')
-    manhattan_helper('eur')
-    manhattan_helper('afr')
+    for pop in ['afr', 'eas', 'amr', 'eur']:
+        print(f'Creating Manhattan plot for {pop}...')
+        manhattan_helper(pop)
+        print('Done!')
     
     
 def data_prep(pop):
@@ -299,4 +416,6 @@ def miami_helper(pop):
 
 def miami():
     for pop in ['afr', 'eas', 'amr', 'eur']:
+        print(f'Creating miami plot for {pop}...')
         miami_helper(pop)
+        print('Done!')

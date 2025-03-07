@@ -6,6 +6,7 @@ import urllib.request
 import data
 import compute_weights
 import association_test
+import generate_plots
 import sys
 
 if __name__ == '__main__':
@@ -99,6 +100,13 @@ is the first time this is being run, enter 'y'. \n([y/n]): ") == 'y':
             print('Skipping association tests')     
 
     if 'generate_plots' in args:
-        ...     
+        print("Generating plots")   
+        generate_plots.gene_loci()
+        generate_plots.generate_venn()
+        print('Creating Manhattan plots. This might take a bit!')
+        generate_plots.manhattan()
+        print('Creating Miami plots. This might take a bit!')
+        generate_plots.miami()  
+
             
 
