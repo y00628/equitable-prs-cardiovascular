@@ -100,13 +100,25 @@ is the first time this is being run, enter 'y'. \n([y/n]): ") == 'y':
             print('Skipping association tests')     
 
     if 'generate_plots' in args:
-        print("Generating plots")   
-        generate_plots.gene_loci()
-        generate_plots.generate_venn()
-        print('Creating Manhattan plots. This might take a bit!')
-        generate_plots.manhattan()
-        print('Creating Miami plots. This might take a bit!')
-        generate_plots.miami()  
-
+        if input("Generate gene loci plot? \n([y/n]): ") == 'y':  
+            print('Generating gene loci plot...')
+            generate_plots.gene_loci()
+            print('Done!')
+        if input("Generate gene venn diagram? \n([y/n]): ") == 'y':  
+            print('Generating gene venn diagram')
+            generate_plots.generate_venn()
+            print('Done!')
+        if input("Generate Manhattan plots? This might take a couple minutes. \n([y/n]): ") == 'y':  
+            print('Creating Manhattan plots...')
+            generate_plots.manhattan()
+            print('Done!')
+        if input("Generate Miami plots? This might take a couple minutes. \n([y/n]): ") == 'y':  
+            print('Creating Miami plots...')
+            generate_plots.miami()  
+            print('Done!')
+        if input("Create GO plots? \n([y/n]): ") == 'y':  
+            print('Creating GO plots.')
+            generate_plots.go_plots()
+            print('Done!')
             
 

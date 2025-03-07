@@ -416,6 +416,36 @@ def miami_helper(pop):
 
 def miami():
     for pop in ['afr', 'eas', 'amr', 'eur']:
-        print(f'Creating miami plot for {pop}...')
+        print(f'Creating Miami plot for {pop}...')
         miami_helper(pop)
         print('Done!')
+
+def plot_go_analysis(populations):
+    for pop in populations:
+        print(f'Creating GO plot for {pop}...')
+        file_path = os.path.join("..","data","GO_data",f"{pop}_GO_0.05.txt")
+        
+        df = pd.read_csv(file_path, sep='\t')
+        df['log10_Pvalue'] = -np.log10(df['PValue'])
+        df['term'] = df['Term'].str.split('~').str[-1]  # Extract GO term
+        
+        # Select top 15 terms based on P-value
+        top_df = df.sort_values(by='log10_Pvalue', ascending=False).head(15)
+        
+        # Plot
+        plt.figure(figsize=(10, 8))
+        plt.barh(top_df['term'], top_df['log10_Pvalue'], color='skyblue')
+        plt.xlabel('log10(Pvalue)')
+        plt.ylabel('Term', fontsize=14)
+        plt.title(f"Gene Ontology Analysis (pop: {pop})")
+        plt.yticks(fontsize=12)
+        
+        # Formatting
+        plt.gca().invert_yaxis()
+        plt.tight_layout()
+        plt.savefig(os.path.join("..","plots","GO_plots",f"{pop}_GO_0.05.png"), dpi=300)
+        print('Done!')
+def go_plots():
+    plot_go_analysis(['afr', 'eur', 'amr', 'eas'])
+
+
