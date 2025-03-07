@@ -12,12 +12,12 @@ import sys
 if __name__ == '__main__':
     args = sys.argv[1:]
 
-    print('\nPress Ctrl-C to terminate the program at any point.\n')
+    print('\nPress Ctrl-C or Cmd-C to terminate the program at any point.\n')
 
-    if not args:
-        print('Use the `help` argument to display a list of possible arguments.')
+    commands = ['help', 'data', 'compute_weights', 'association_test', 'generate_plots']
+    unrecognized_commands = list(filter(lambda cmd: cmd not in commands, args))
 
-    if 'help' in args:
+    if 'help' in args or not args:
         print('`help`: List possible arguments')
         print('`data`: Download and process data for model weight computation \
 and cross population analyses')
@@ -88,13 +88,14 @@ is the first time this is being run, enter 'y'. \n([y/n]): ") == 'y':
         association_test.generate_snp_list()
         print('Done!')
 
-        if input("Process GWAS summary statistics for FUSION.assoc_test.R? \n If this \
-is the first time this is being run, enter 'y'. \n([y/n]): ") == 'y':
+        if input("GWAS summary statistics have already by processed for your convenience. \
+\nReprocess GWAS summary statistics for FUSION.assoc_test.R? This will take a long time. \n([y/n]): ") == 'y':
             print('Processing GWAS files for FUSION.assoc_test.R...')
             association_test.process_sumstats()
             print('Done!')
 
-        if input("Run association tests? \n([y/n]): ") == 'y':  
+        if input("Association test results have been saved for your convenience. \
+\nRun association tests again anyway? \n([y/n]): ") == 'y':  
             association_test.association_test()
         else:
             print('Skipping association tests')     
@@ -121,4 +122,4 @@ is the first time this is being run, enter 'y'. \n([y/n]): ") == 'y':
             generate_plots.go_plots()
             print('Done!')
             
-
+    print(f"Unrecognized commands: {unrecognized_commands}\nUse the `help` argument to display a list of commands.")
