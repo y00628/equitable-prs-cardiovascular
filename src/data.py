@@ -115,7 +115,7 @@ def phenotype_split():
             columns={'index': 'FID', i: 'Expression'})
         temp_df['IID'] = temp_df['FID']
         temp_df = temp_df[['FID', 'IID', 'Expression']]
-        os.makedirs("..","data","gene_expressions",f"chr_{temp_chrom}", exist_ok=True)
+        os.makedirs(os.path.join("..","data","gene_expressions",f"chr_{temp_chrom}"), exist_ok=True)
         temp_df.to_csv(\
             os.path.join("..","data","gene_expressions",f"chr_{temp_chrom}",f"{gene_name}.txt"), \
                 index=False, header=None, sep='\t')  
