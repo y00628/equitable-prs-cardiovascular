@@ -122,4 +122,5 @@ is the first time this is being run, enter 'y'. \n([y/n]): ") == 'y':
             generate_plots.go_plots()
             print('Done!')
             
-    print(f"Unrecognized commands: {unrecognized_commands}\nUse the `help` argument to display a list of commands.")
+    if unrecognized_commands:
+        print(f"Unrecognized commands: {unrecognized_commands}\nUse the `help` argument to display a list of commands.")
