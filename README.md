@@ -1,14 +1,14 @@
-# Effectiveness of PRS models across populations for cardiovascular disease
+# Effectiveness of PRS models across populations for cardiovascular disease 🧬
 
 
-
+This project aims to investigate the generalizability of PRS models across various populations for cardiovascular diseases. Various models trained on European data are compared against GWAS summary statistics for European, East Asian, African, and American populations. These models and association tests are done using the [`FUSION`](http://gusevlab.org/projects/fusion/) software. If you're interested in learning more about this project, check out our [report](https://drive.google.com/file/d/1zu4fIurSg-mX8VTd10HnFDjyd7nwPdN7/view?usp=drive_link)!
 
 
 
 
 ## Setup
 
-1. This code requires python and R to be added to `PATH`.
+1. This code requires Python and R to be added to `PATH`.
 
 1. Clone this repository using the following command: 
 
@@ -42,17 +42,32 @@
         * Again, try the following if you encounter an error: 
         `Rscript -e "install.packages(c('glmnet','methods'), repos='http://cran.rstudio.com/')"`
 
+
+## Running the code
 1. The code can be run using:
-    `py run.py <arg1> <arg2> ...`
+
+    * Linux/macOS: `python3 run.py <arg1> <arg2> ...`
+
+    * Windows: `py run.py <arg1> <arg2> ...`
 
 1. A list of arguments for the program can be listed using the `help` argument:
-    `py run.py help`
+    
+    *Linux/macOS: `python3 run.py help`
+
+    * Windows: `py run.py help`
 
 1. The `data` argument downloads the GBMI GWAS summary statistics for various
-populations (European, East Asian, American, African, All) and processes the
+populations (European, East Asian, American, African) and processes the
 data for use in [FUSION.compute_weights.R](http://gusevlab.org/projects/fusion/#compute-your-own-predictive-models).
 
+    * The GWAS data may take a few minutes to download, depending on the speed of your internet connection, as the files are ~2GB total. These files will be saved in 2 locations: `data/raw/gwas/` and `data/gwas`.
+
 1. The `compute_weights` argument should be used once all data has been 
-downloaded and processed. This will produce model weights required for
+downloaded and processed using the `data` argument. This will produce model weights required for
 our [FUSION.assoc_test.R](http://gusevlab.org/projects/fusion/#typical-analysis-and-output), which will be used to evaluate a European population
-based model against all the populations mentioned above.
+based model against all the populations mentioned above. The weights will be stored in `data/weights`
+
+1. The `association_tests` argument should be used once all the model weights have been computed, and will store the test outputs for each population in `data/gene_associations`.
+
+1. The `generate_plots` argument should be used once all other arguments have been run. This will generate plots related to our analysis of the association tests run for each population, which will be stored in the `plots` directory.
+
