@@ -18,18 +18,19 @@ if __name__ == '__main__':
     unrecognized_commands = list(filter(lambda cmd: cmd not in commands, args))
 
     if 'help' in args or not args:
-        print('`help`: List possible arguments')
+        print('`help`: List possible arguments.\n')
         print('`data`: Download and process data for model weight computation \
-and cross population analyses')
-        print('`compute_weights`: Compute model weights for comparison to \
-              \nGWAS summary statistics')
+and cross population analyses. \nMust be run before `compute_weights`, `association_test`, and `generate_plots`.\n')
+        print('`compute_weights`: Compute model weights for comparison to GWAS summary statistics. \
+              \nMust be run before `association_test` and `generate_plots`.\n')
         print('`association_test`: Run association tests between calculated SNP weights for European samples \
-\n against GWAS sumstats for European, East Asian, African, and American populations.')
-        print('`generate_plots`: Generate plots from association_test results.')
+\nagainst GWAS sumstats for European, East Asian, African, and American populations. \nMust be run before `generate_plots`.\n')
+        print('`generate_plots`: Generate plots from `association_test` results.\n')
         
 
     if 'data' in args:        
-        if input("Download GWAS summary statistics? This may take a while. \n([y/n]): ") == 'y':
+        if input("Download GWAS summary statistics? This may take a while. \
+\nEnter 'y' if this is the first time it is being run. \n([y/n]): ") == 'y':
             print('Starting GBMI GWAS downloads\n')
             data.download_gwas()
             print('All GWAS files downloaded\n')
