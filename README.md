@@ -1,7 +1,7 @@
 # Effectiveness of PRS models across populations for cardiovascular disease 🧬
 
 
-This project aims to investigate the generalizability of PRS models across various populations for cardiovascular diseases. Various models trained on European data are compared against GWAS summary statistics for European, East Asian, African, and American populations. These models and association tests are done using the [`FUSION`](http://gusevlab.org/projects/fusion/) software. If you're interested in learning more about this project, check out our [report](https://drive.google.com/file/d/1zu4fIurSg-mX8VTd10HnFDjyd7nwPdN7/view?usp=drive_link)!
+This project aims to investigate the generalizability of PRS models across various populations for cardiovascular diseases. Various models trained on European data are compared against GWAS summary statistics for European, East Asian, African, and American populations. These models and association tests are done using the [`FUSION`](http://gusevlab.org/projects/fusion/) software. If you're interested in learning more about this project, check out our [website](https://y00628.github.io/equitable-prs-cardiovascular/) and [report](https://drive.google.com/file/d/1zu4fIurSg-mX8VTd10HnFDjyd7nwPdN7/view?usp=drive_link)!
 
 
 
