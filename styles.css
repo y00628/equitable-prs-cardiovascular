@@ -159,3 +159,54 @@ h3 {
     font-size: 18px;
 }
 
+#results-section {
+    text-align: center;
+}
+
+/* Separate each plot more */
+.result-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin-bottom: 30px; /* Increased spacing */
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure images are centered */
+.results-image {
+    max-width: 90%;
+    height: auto;
+}
+
+/* Hide Miami explanation initially */
+.miami-explanation {
+    display: none;
+    text-align: center;
+    font-size: 16px;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 80%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Show explanation only when hovering over Miami plot */
+.miami-container {
+    position: relative;
+}
+
+.miami-container:hover .miami-explanation {
+    display: block;
+}
+

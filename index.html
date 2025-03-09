@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>UCSD DSC 180 Capstone WI25</title>
+        <title>Effectiveness of PRS Models Across Populations for Cardiovascular Diseases</title>
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
@@ -41,7 +41,6 @@
                 <header class="body-section-header" id="methods-header"><h2>Methods</h2></header>
                 <section class="body-section-content" id="methods">
                     <img src="assets/method_flowchart.png" alt="Method Flowchart">
-                    <section class="sub-section" id="data-filtering"><h3>Data Filtering</h3></section>
                     <section class="sub-section" id="computing-weights"><h3>Compute SNP weights</h3></section>
                     <section class="sub-section" id="assoc-test"><h3>Association Testing</h3></section>
                     <section class="sub-section" id="cross-pop-assoc-analysis"><h3>Cross-Population Gene Association Analysis</h3></section>
@@ -49,12 +48,34 @@
             </div>
             <!-- Results -->
             <div class="body-section" id="results-section">
-                <header class="body-section-header" id="results-header"><h2>Results</h2></header>
-                <section class="body-section-content" id="results">Results</section>
+                <header class="body-section-header" id="results-header">
+                    <h2>Results</h2>
+                </header>
+                <section class="body-section-content" id="results">
+            
+                    <div class="result-container miami-container">
+                        <img src="plots/miami/afr.png" alt="AFR Miami Plot" class="results-image" width="800">
+                    </div>
+            
+                    <div class="result-container manhattan-container">
+                        <img src="plots/manhattan/eas_manhattan.png" alt="EAS Manhattan Plot" class="results-image" width="800">
+                    </div>
+            
+                    <div class="result-container venn-container">
+                        <img src="assets/pop_gene_venn.png" alt="Venn Diagram" class="results-image" width="400">
+                    </div>
+            
+                    <div class="result-container huge-container">
+                        <img src="assets/huge_ORMDL3.png" alt="Huge" class="results-image" width="800">
+                    </div>
+            
+                </section>
             </div>
+            
+            
             <!-- Additional Content -->
-            <div class="body-section" id="additional-content-section">
-                <header class="body-section-header" id="additional-content-header"><h2>Additional Content</h2></header>
+            <div class="body-section" id="conclusion-section">
+                <header class="body-section-header" id="additional-content-header"><h2>Conclusion</h2></header>
                 <section class="body-section-content" id="additional-content">Additional Content</section>
             </div>
         </main>
