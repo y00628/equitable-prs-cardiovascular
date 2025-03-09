@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>UCSD DSC 180 Capstone WI25</title>
+        <title>Effectiveness of PRS Models Across Populations for Cardiovascular Diseases</title>
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
@@ -29,19 +29,143 @@
             <!-- Introduction -->
             <div class="body-section" id="intro-section">
                 <header class="body-section-header" id="intro-header"><h2>Intro</h2></header>
-                <section class="body-section-content" id="intro">Intro</section>
+                <section class="body-section-content" id="intro">
+                    Polygenic Risk Score (PRS) is a genetic risk calculator that adds up small genetic effects from many different locations in a person's DNA. 
+                    It is used to estimate their risk for a disease. It was first used to study schizophrenia (SCZ), based on the hypothesis that the disorder
+                    is linked to multiple common genetic variations. It has since become widely used for predicting various diseases. PRS works best for people of European ancestry because most genetic research data comes from European populations. 
+                    However, its performance significantly decreases for other populations.
+
+                    <br><br>
+
+                    While scientists have made progress in improving polygenic risk scores (PRS) for different populations, most studies rely on simulated data rather than real-world genetic information. 
+                    This is because researchers have limited access to large genetic datasets that include diverse ancestry groups. 
+                    Additionally, most studies focus on overall PRS accuracy across the entire genome rather than looking at specific genes that may behave differently in different populations. 
+
+                    <br><br>
+                    
+                    Our study aims to provide gene-level insights into ancestry-specific gene-disease associations, with a focus on heart failure. 
+                    Unlike common conditions like diabetes or schizophrenia, heart failure is understudied. It is complex and varies across populations, making it a good disease for testing PRS accuracy. To thoroughly understand why PRS accuracy varies across populations, we computed gene expression prediction weights using publicly available European-ancestry gene expression data. 
+                    We then applied these prediction weights to GWAS summary statistics for heart failure across different populations. This allowed us to analyze gene-disease associations using FUSION, a transcriptome-wide association study (TWAS) framework. 
+
+                    <br><br>
+
+                    By comparing gene-disease associations across ancestry populations, we were able to identify specific genes where PRS predictions for heart failure may be biased due to population-specific genetic architecture. Our findings provide functional insights into PRS transferability, helping to explain how genetic regulation of disease-related genes differs across ancestries. 
+
+
+                </section>
             </div>
             <!-- Data -->
             <div class="body-section" id="data-section">
-                <header class="body-section-header" id="data-header"><h2>Data</h2></header>
-                <section class="body-section-content" id="data">Data</section>
+                <header class="body-section-header" id="data-header">
+                    <h2>Data</h2>
+                </header>
+            
+                <section class="body-section-content" id="data">
+                    <p>Our analysis is based on two main types of genetic data:</p>
+            
+                    <h3>European SNP Training Data</h3>
+                    <ul>
+                        <li><strong>Source:</strong> <a href="https://www.internationalgenome.org/" target="_blank">1000 Genomes Project</a></li><br>
+                        <li><strong>Includes:</strong><br>
+                            <ul>
+                                <li>LDREF genotype data</li>
+                                <li>Corresponding gene expression data</li>
+                            </ul>
+                        </li><br>
+                        <li><strong>Data Descriptions</strong><br><br>
+                            <ul>
+                                <li><strong>LDREF genotype data</strong><br>
+                                    <ul>
+                                        <li>SNPs are filtered through pruning and thresholding. <br><br>
+                                        <li>Before filtering:<br>
+                                            <ul>
+                                                <li>489 individuals</li>
+                                                <li>1,190,321 SNPs across 22 chromosomes</li>
+                                            </ul>
+                                        </li>
+                                        <li>After filtering:<br>
+                                            <ul>
+                                                <li>343 individuals remained</li>
+                                                <li>145,335 significant SNPs</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li><br>
+                                <li><strong>Gene expression data</strong><br>
+                                    <ul>
+                                        <li>Covers 23,722 genes</li>
+                                        <li>343 individuals had both genetic and expression data</li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </li> <br><br>
+                        <li>In addition to the filterings done above, principal component analysis was also performed. <br>
+
+                    </ul>
+
+                    <img src="assets/pca_by_population.png" alt="PCA by Population" class="pca-image" width="800">
+                    <p>To reduce the impacts of potential multi-collinearity, principal component analysis is applied to reduce the dimensionality of the genotype data.</p>
+
+            
+                    <h3>GWAS Data for Cardiovascular Disease</h3>
+                    <p>This dataset focuses on heart failure and includes genetic information from different population groups.
+                        Each SNP has a p-value, showing how strongly it is linked to heart failure. The total number of SNPs varies based on the size of each population group.
+                    </p>
+                    <ul>
+                        <li><strong>Populations and corresponding number of SNPs:</strong><br>
+                            <br>
+                            <table border="1">
+                                <thead>
+                                    <tr>
+                                        <th>Population</th>
+                                        <th>Number of SNPs</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>American</td>
+                                        <td>5,761,787</td>
+                                    </tr>
+                                    <tr>
+                                        <td>East Asian</td>
+                                        <td>8,121,472</td>
+                                    </tr>
+                                    <tr>
+                                        <td>African</td>
+                                        <td>16,745,089</td>
+                                    </tr>
+                                    <tr>
+                                        <td>European</td>
+                                        <td>21,705,455</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                        </li>
+                        <br>
+                        <li><strong>Source:</strong> <a href="https://www.globalbiobankmeta.org/" target="_blank">Global Biobank Meta-analysis Initiative (GBMI)</a></li><br>
+
+                        <li><strong>Purpose:</strong><br>
+                            <ul>
+                                <li>To identify genetic risk factors for heart failure</li>
+                                <li>To improve statistical power to detect meaningful genetic associations</li>
+                            </ul>
+                        </li><br>
+                        
+                    </ul>
+
+                    
+
+                </section>
             </div>
+            
+            
             <!-- Methods -->
             <div class="body-section" id="methods-section">
                 <header class="body-section-header" id="methods-header"><h2>Methods</h2></header>
                 <section class="body-section-content" id="methods">
                     <img src="assets/method_flowchart.png" alt="Method Flowchart">
-                    <section class="sub-section" id="data-filtering"><h3>Data Filtering</h3></section>
                     <section class="sub-section" id="computing-weights"><h3>Compute SNP weights</h3></section>
                     <section class="sub-section" id="assoc-test"><h3>Association Testing</h3></section>
                     <section class="sub-section" id="cross-pop-assoc-analysis"><h3>Cross-Population Gene Association Analysis</h3></section>
@@ -49,12 +173,46 @@
             </div>
             <!-- Results -->
             <div class="body-section" id="results-section">
-                <header class="body-section-header" id="results-header"><h2>Results</h2></header>
-                <section class="body-section-content" id="results">Results</section>
+                <header class="body-section-header" id="results-header">
+                    <h2>Results</h2>
+                </header>
+                <section class="body-section-content" id="results">
+            
+                    <div class="result-container miami-container">
+                        <img src="plots/miami/afr.png" alt="AFR Miami Plot" class="results-image" width="800">
+                    </div>
+            
+                    <div class="result-container manhattan-container">
+                        <img src="plots/manhattan/eas_manhattan.png" alt="EAS Manhattan Plot" class="results-image" width="800">
+                    </div>
+            
+                    <div class="result-container venn-container">
+                        <img src="assets/pop_gene_venn.png" alt="Venn Diagram" class="results-image" width="400">
+                    </div>
+
+                    <div class="result-container loci-container">
+                        <img src="assets/gene_loci.png" alt="Loci" class="results-image" width="800">
+                    </div>
+            
+                    <div class="result-container huge-container">
+                        <img src="assets/huge_ORMDL3.png" alt="Huge" class="results-image" width="800">
+                    </div>
+
+                    <div class="result-container go-container">
+                        <img src="assets/eur_GO_0.05.png" alt="GO" class="results-image" width="800">
+                        <p>Gene Ontology Enrichment Analysis (European)</p>
+                        <p> </p>
+                        <img src="assets/amr_GO_0.05.png" alt="GO" class="results-image" width="800">
+                        <p>Gene Ontology Enrichment Analysis (American)</p>
+                    </div>
+            
+                </section>
             </div>
+            
+            
             <!-- Additional Content -->
-            <div class="body-section" id="additional-content-section">
-                <header class="body-section-header" id="additional-content-header"><h2>Additional Content</h2></header>
+            <div class="body-section" id="conclusion-section">
+                <header class="body-section-header" id="additional-content-header"><h2>Conclusion</h2></header>
                 <section class="body-section-content" id="additional-content">Additional Content</section>
             </div>
         </main>
