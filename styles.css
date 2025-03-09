@@ -210,3 +210,9 @@ h3 {
     display: block;
 }
 
+#intro-section {
+    padding: 5px 10px; /* Reduce extra padding */
+    margin-bottom: 10px;
+}
+
+

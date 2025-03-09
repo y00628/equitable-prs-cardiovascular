@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const sidebarMessages = {
         "intro-section": "Single Nucleotide Polymorphism (SNP): genetic variant at a specific location \n\n Genotype: unique DNA code; a set of instructions that tells your body what to do \n\n Gene expression: the set of instructions actually being used. Can change over time due to factors like environment, age, and disease. \n\n Genome-wide association studies (GWAS): identify genetic variants associated with a disease \n\n Transcriptome-wide association studies (TWAS): identify genes associated with a disease via their gene expression",
-        "data-section": "Links to data(?).",
+        "data-section": "LDREF: Linkage Disequilibrium Reference",
         "methods-section": "Linkage Disequilibrium (LD): non-random association of alleles at two or more loci \n\n Thresholding: setting a threshold to determine significant SNPs",
-        "results-section": "Hover over a plot to view more insights",
+        "results-section": "",
         "additional-content-section": "Find extra resources and discussions here.",
     };
 
@@ -103,7 +103,17 @@ document.addEventListener("DOMContentLoaded", function () {
         "Venn Diagram of Population Gene Overlaps:<br><br>Using the Venn diagram, we compared the significant genes in each population using the European cohort as a reference, given that SNP weights were initially trained on this population. We found out that only 3 to 4 overlapping genes per population. The modest degree of overlap reinforces the importance of population-specific PRS models."
     );
 
+    addHoverEffect(document.querySelector(".loci-container"),
+        "Loci of significant genes:<br><br>We used the loci of significant genes to assess genetic similarities in heart failure suspectibility. As demonstrated on the plot, the amount of overlap between the populations is pretty modest, suggesting that the genes associated with heart disease are very population-specific."
+    );
+
     addHoverEffect(document.querySelector(".huge-container"),
-        "Huge ORMDL3 Gene Association:<br><br>ORMDL3 has been strongly linked to inflammatory responses and respiratory diseases. This visualization explores its association with disease susceptibility."
+        "HuGE ORMDL3 Gene Association:<br><br>Using a stricter significance threshold of p < 0.001, we identified several genes strongly associated with heart failure in the European population. We determined the strength of the associations using HuGE (Human Genetic Evidence) Score. Specifically, gene ORMDL3 in chromosome 17 exhibited the strongest association with heart failure, as it had the highest HuGE score for this condition. "
+    );
+
+    addHoverEffect(document.querySelector(".go-container"), 
+        "Gene Ontology (GO) Enrichment Analysis:<br><br>GO Enrichment Analysis is a method used to find which biological functions are most affected by the significant genes in each population. For instance, we can infer from the plot that hypoxia (low oxygen) is a major factor in heart failure in the European population, followed by regulation of smooth muscle contraction. <br><br>On the other hand, the biological processes displayed for the American population do not exhibit that strong of an association with heart failure comparing to the European population."
     );
 });
+
+console.log(sidebarMessages["data-section"])
