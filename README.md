@@ -32,15 +32,29 @@ This project aims to investigate the generalizability of PRS models across vario
 
     * `Rscript devtools::install_github("gabraham/plink2R/plink2R")`
 
+        * Try the following if you encounter an error: 
+        `Rscript -e "Rscript -e "devtools::install_github('gabraham/plink2R/plink2R')"`
+
     * `Rscript install.packages(c('optparse','RColorBrewer'))`
 
-        * Alternatively you may need to try: 
+        * Again you may need to try: 
         `Rscript -e "install.packages(c('optparse','RColorBrewer'), repos='http://cran.rstudio.com/')"`
 
     * `Rscript install.packages(c('glmnet','methods'))`
 
-        * Again, try the following if you encounter an error: 
+        * Again you may need to try: 
         `Rscript -e "install.packages(c('glmnet','methods'), repos='http://cran.rstudio.com/')"`
+
+1. Install GCTA (Genome-wide Complex Trait Analysis) if needed
+   
+ * TWAS FUSION comes with `gcta_nr_robust` (for non-Windows) and `gcta_nr_robust.exe` (for Windows). If it's not working, follow these steps:
+   
+     * Download the corresponding GCTA version from [here](https://yanglab.westlake.edu.cn/software/gcta/#Download).
+       
+     * Unzip the downloaded folder.
+        
+     * Move the executable file into the `src/fusion_twas-master` directory and rename it to `gcta_nr_robust`.
+         * e.g., on macOS ARM64, the executable file is named `gcta64`
 
 
 ## Running the code
