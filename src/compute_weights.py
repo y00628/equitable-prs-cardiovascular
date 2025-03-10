@@ -9,14 +9,15 @@ all_platforms = ['linux', 'win32', 'darwin']
 plat_os = platform
 RSCRIPT_PATH="Rscript"
 FUSION_SCRIPT=os.path.join("fusion_twas-master", "FUSION.compute_weights.R")
-BFILE_TEMPLATE=os.path.join("..","data","LDREF_filtered","1000G.EUR.{chr}") 
+BFILE_TEMPLATE=os.path.join("..","data","LDREF_pruned","1000G.EUR.{chr}")
 TMP_DIR="temp_files"
 OUTPUT_DIR=os.path.join("..","data","weights","chr_{chr}")
 MODELS="top1,enet,lasso"
 PLINK_PATH="plink.exe"
+GCTA_PATH=os.path.join("fusion_twas-master","gcta_nr_robust.exe")
 if plat_os != 'win32':
     PLINK_PATH = "./plink"
-GCTA_PATH=os.path.join("fusion_twas-master","gcta_nr_robust.exe")
+    GCTA_PATH=os.path.join("fusion_twas-master","gcta64")
 PHENO_DIR=os.path.join("..","data","gene_expressions","chr_{chr}")
 VERBOSE=2
 
@@ -31,7 +32,7 @@ def compute_weights(
         MODELS=MODELS, 
         PLINK_PATH=PLINK_PATH, 
         GCTA_PATH=GCTA_PATH, 
-        PHENO_DIR=PHENO_DIR, 
+        PHENO_DIR=PHENO_DIR,
         VERBOSE=2
         ):
     
@@ -52,9 +53,40 @@ def compute_weights(
     else:
         filtered_phenotypes = phenotypes[~phenotypes['Chr'].isin(['X', 'Y', 'M'])]
     to_calc = filtered_phenotypes[['TargetID', 'Chr']]
+
+    def generate_pca(chromosome):
+        """Generates PCA components once per chromosome and returns the PCA file path."""
+        pca_output_path = os.path.join(TMP_DIR, f"1000G.EUR.{chromosome}.pca10")
+
+        # Check if PCA has already been computed to avoid redundant computation
+        if os.path.exists(pca_output_path + ".eigenvec"):
+            print(f"PCA already exists for chromosome {chromosome}, skipping recomputation.")
+            return pca_output_path + ".eigenvec"
+
+        command_pca = [
+            PLINK_PATH, "--bfile", BFILE_TEMPLATE.format(chr=chromosome),
+            "--pca", "10",
+            "--out", pca_output_path
+        ]
+
+        try:
+            subprocess.run(command_pca, check=True)
+            return pca_output_path + ".eigenvec"  # Return path to PCA file
+        except subprocess.CalledProcessError as e:
+            print(f"Error generating PCA for chromosome {chromosome}: {e}")
+            return None
+
+    # Compute PCA once per chromosome
+    chromosome_pca_paths = {} 
+    for chromosome in chromosomes:
+        cor_path = generate_pca(chromosome) 
+        chromosome_pca_paths[chromosome] = cor_path 
+
     count = 0
-    def compute_weights_helper_win(gene, chromosome):
+
+    def compute_weights_helper_win(gene, chromosome, cor_path):
         """Runs the FUSION TWAS pipeline for a specific gene and chromosome."""
+
         # Construct file paths
         bfile = BFILE_TEMPLATE.format(chr=chromosome)
         output_dir = OUTPUT_DIR.format(chr=chromosome)
@@ -78,7 +110,8 @@ def compute_weights(
             "--PATH_plink", PLINK_PATH,
             "--PATH_gcta", GCTA_PATH,
             "--verbose", str(VERBOSE),
-            "--pheno", pheno_file
+            "--pheno", pheno_file, 
+            "--covar", cor_path
         ]
         clear_command = ['rm', '-rf', os.path.join(tmp_file_prefix, "*")]
 
@@ -96,4 +129,5 @@ def compute_weights(
     for i in to_calc.index:
         count += 1
         gene_data = to_calc.loc[i]
-        compute_weights_helper_win(gene_data['TargetID'], gene_data['Chr'])
+        cor_path = chromosome_pca_paths.get(gene_data['Chr'], None)
+        compute_weights_helper_win(gene_data['TargetID'], gene_data['Chr'], cor_path)

@@ -12,4 +12,5 @@ upsetplot
 matplotlib
 seaborn
 adjustText
+venny4py
 

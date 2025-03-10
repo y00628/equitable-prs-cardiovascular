@@ -151,7 +151,7 @@ def gene_loci():
 
     # Adjust layout and spacing between subplots
     plt.tight_layout(w_pad=0)
-    print(f"Saved gene_loci plot to {os.path.join("..","plots","gene_loci.png")}")
+    print(f"Saved gene_loci plot to {os.path.join('..', 'plots', 'gene_loci.png')}")
     plt.savefig(os.path.join("..","plots","gene_loci.png"))
 
 
