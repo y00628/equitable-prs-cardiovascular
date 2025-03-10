@@ -47,13 +47,13 @@ This project aims to investigate the generalizability of PRS models across vario
 
 1. Install GCTA (Genome-wide Complex Trait Analysis) if needed
    
- * TWAS FUSION comes with `gcta_nr_robust` (for non-Windows) and `gcta_nr_robust.exe` (for Windows). If it's not working, follow these steps:
-   
-     * Download the corresponding GCTA version from [here](https://yanglab.westlake.edu.cn/software/gcta/#Download).
+    `TWAS FUSION` comes with `gcta_nr_robust` (for non-Windows) and `gcta_nr_robust.exe` (for Windows). If it's not working, follow these steps:
+
+    1. Download the corresponding GCTA version from [here](https://yanglab.westlake.edu.cn/software/gcta/#Download).
        
-     * Unzip the downloaded folder.
-        
-     * Move the executable file into the `src/fusion_twas-master` directory and rename it to `gcta_nr_robust`.
+    3. Unzip the downloaded folder.
+       
+    5. Move the executable file into the `src/fusion_twas-master` directory and rename it to `gcta_nr_robust`.
          * e.g., on macOS ARM64, the executable file is named `gcta64`
 
 
