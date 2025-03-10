@@ -166,9 +166,63 @@
                 <header class="body-section-header" id="methods-header"><h2>Methods</h2></header>
                 <section class="body-section-content" id="methods">
                     <img src="assets/method_flowchart.png" alt="Method Flowchart">
-                    <section class="sub-section" id="computing-weights"><h3>Compute SNP weights</h3></section>
-                    <section class="sub-section" id="assoc-test"><h3>Association Testing</h3></section>
-                    <section class="sub-section" id="cross-pop-assoc-analysis"><h3>Cross-Population Gene Association Analysis</h3></section>
+                    <section class="sub-section" id="computing-weights">
+                        <h3>Compute SNP Weights</h3>
+                        <br>
+                        Model weights (i.e. SNP weights) for each of
+                        the 23,722 genes are then computed for the standardized gene expression levels for three
+                        different models (using <code>FUSION.compute_weights.R</code>). The models used are Top1, LASSO, and Elastic Net.
+                        Click the button below if you are interested in seeing how weights are computed using different models.
+                        <br>
+                        <div class="dropdown">
+                            <button class="dropdown-btn" onclick="toggleDropdown('equation-content-1', this)">Click for more info</button>
+                            <div class="dropdown-content" id="equation-content-1">
+                                <img src="assets/compute_eq.png" alt="Equation 1" class="equation-image" width="800">
+                                <img src="assets/compute_notes.png" alt="Equation Notes 1" class="equation-note" width="800">
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section class="sub-section" id="assoc-test">
+                        <h3>Association Testing</h3>
+                        <br>
+                        Using the computed European weights, association tests are conducted between these weights
+                        and GWAS summary statistics for each population to assess the relationship between genetically predicted gene expression and the trait of interest. 
+                        This analysis is performed using <code>FUSION.assoc_test.R</code>.  
+
+                        The key outputs are the TWAS Z-scores and their corresponding p-values. A Z-score with a large magnitude indicates a strong association between 
+                        predicted gene expression and the trait (heart failure), while the p-value reflects the statistical significance of this association.
+
+                        <br><br>
+                        <div class="dropdown">
+                            <button class="dropdown-btn" onclick="toggleDropdown('equation-content-2', this)">Click for more info</button>
+                            <div class="dropdown-content" id="equation-content-2">
+                                <img src="assets/assoc_test_eq.png" alt="Equation 2" class="equation-image" width="800">
+                                <img src="assets/assoc_notes.png" alt="Equation Notes 2" class="equation-note" width="800">
+                            </div>
+                        </div>
+                    </section>
+                    <section class="sub-section" id="cross-pop-assoc-analysis"><h3>Cross-Population Gene Association Analysis</h3>
+                        <p>
+                            With the computed Z-scores and p-values, several downstream analyses are performed to 
+                            further characterize the genetic architecture of heart failure. These include:
+                        </p>
+                        <ul>
+                            <li><strong>Gene locus mapping:</strong> Identifies the genomic regions associated with 
+                                significant genes (<i>p</i> ≤ 0.05).
+                            </li>
+                            <li><strong>Cross-population gene overlap analysis:</strong> Assesses shared and 
+                                population-specific genetic associations.
+                            </li>
+                            <li><strong>Human genetic evidence scoring:</strong> Scores the relationship between genes 
+                                and phenotypes based on their level of support from independent genetic datasets. Higher scores
+                                indicate stronger associations.
+                            </li>
+                            <li><strong>Gene Ontology (GO) analysis:</strong> Identifies biological pathways and 
+                                molecular functions enriched among the significant genes.
+                            </li>
+                        </ul>
+                    </section>
                 </section>
             </div>
             <!-- Results -->
@@ -177,6 +231,8 @@
                     <h2>Results</h2>
                 </header>
                 <section class="body-section-content" id="results">
+
+                    <p>Hover on the plots to gain relevant insights!</p>
             
                     <div class="result-container miami-container">
                         <img src="plots/miami/afr.png" alt="AFR Miami Plot" class="results-image" width="800">
@@ -213,7 +269,11 @@
             <!-- Additional Content -->
             <div class="body-section" id="conclusion-section">
                 <header class="body-section-header" id="additional-content-header"><h2>Conclusion</h2></header>
-                <section class="body-section-content" id="additional-content">Additional Content</section>
+                <section class="body-section-content" id="additional-content">
+                    Our study found that when we used genetic models trained only on European data, the results varied greatly across different ancestry groups. The genes linked to heart failure in non-European populations were very different from those in Europeans. In fact, the most important genes for heart failure in European populations were not found to be significant in other groups. 
+                    Additionally, when we analyzed how these genes function in the body, we found that European-based genes showed strong connections to heart failure, while the genes identified in non-European groups had weaker associations.
+                    These findings suggest that using only European genetic data to predict heart disease in diverse populations can lead to inaccurate risk assessments and worsen health disparities.
+                </section>
             </div>
         </main>
 

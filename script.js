@@ -116,4 +116,18 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 });
 
-console.log(sidebarMessages["data-section"])
+function toggleDropdown(dropdownId, button) {
+    let dropdown = document.getElementById(dropdownId);
+
+    if (dropdown.style.display === "block") {
+        dropdown.style.display = "none";
+        button.textContent = "Click for more info";
+    } else {
+        dropdown.style.display = "block";
+        button.textContent = "Click to hide";
+    }
+}
+
+
+
+
