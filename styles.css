@@ -335,3 +335,45 @@ h3 {
         grid-template-columns: 1fr;
     }
 }
+
+.github-report-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Adjust spacing between buttons */
+    margin-top: 30px;
+}
+
+.github-button, .report-button {
+    display: inline-block;
+    background-color: #24292e; /* GitHub color */
+    color: white;
+    text-decoration: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.report-button {
+    background-color: #007bff; /* Blue for report */
+}
+
+.github-button i {
+    margin-right: 8px;
+}
+
+.github-button:hover {
+    background-color: #444d56; /* Darker GitHub color */
+}
+
+.report-button:hover {
+    background-color: #0056b3; /* Darker blue */
+}
+
+.centered-image {
+    display: block;
+    margin: 20px auto; /* Centers the image horizontally */
+    max-width: 100%; /* Ensures responsiveness */
+    height: auto;
+}
