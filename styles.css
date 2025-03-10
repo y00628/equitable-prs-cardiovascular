@@ -250,4 +250,88 @@ h3 {
     height: auto;
 }
 
+/* Section Title */
+.team-section h2 {
+    font-size: 24px;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
 
+/* 2x2 Grid Layout */
+.team-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    gap: 40px; /* Space between members */
+    justify-content: center;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Individual Team Member Card */
+.team-member {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.team-member:last-child {
+    grid-column: span 2; /* Forces the last item to take up both columns */
+    justify-self: center; /* Centers the card */
+    width: 220px;
+}
+
+/* Circular Images */
+.team-member img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Name */
+.team-member h3 {
+    font-size: 18px;
+    margin: 10px 0 5px;
+}
+
+/* Role */
+.team-member p {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #555;
+}
+
+/* Email */
+.team-member .email {
+    font-size: 12px;
+    color: #777;
+}
+
+/* Social Icons */
+.social-icons {
+    margin-top: 10px;
+}
+
+.social-icons a {
+    color: black;
+    font-size: 18px;
+    margin: 0 5px;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #007bff;
+}
+
+/* Responsive: Stacks members in one column on smaller screens */
+@media (max-width: 600px) {
+    .team-container {
+        grid-template-columns: 1fr;
+    }
+}

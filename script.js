@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "data-section": "LDREF: Linkage Disequilibrium Reference",
         "methods-section": "Linkage Disequilibrium (LD): non-random association of alleles at two or more loci \n\n Thresholding: setting a threshold to determine significant SNPs",
         "results-section": "",
-        "additional-content-section": "Find extra resources and discussions here.",
+        "additional-content-section": "",
     };
 
     // Function to update the right sidebar text
