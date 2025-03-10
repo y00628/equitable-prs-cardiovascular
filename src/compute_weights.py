@@ -17,7 +17,7 @@ PLINK_PATH="plink.exe"
 GCTA_PATH=os.path.join("fusion_twas-master","gcta_nr_robust.exe")
 if plat_os != 'win32':
     PLINK_PATH = "./plink"
-    GCTA_PATH=os.path.join("fusion_twas-master","gcta64")
+    GCTA_PATH=os.path.join("fusion_twas-master","gcta_nr_robust")
 PHENO_DIR=os.path.join("..","data","gene_expressions","chr_{chr}")
 VERBOSE=2
 
